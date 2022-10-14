@@ -1,0 +1,26 @@
+pipeline {
+    agent {label 'chandu'}
+    stages {
+        stage ('vcs') {
+            steps {
+                git url: 'https://github.com/GitPracticeRepo/dotnetcore-docs-hello-world.git',
+                branch: 'master'
+            }
+        }
+        stage ('build') {
+            steps {
+                sh 'dotnet build'
+            }
+        }
+        stage ('publish') {
+            steps {
+                sh 'dotnet publish'
+            }
+        }
+        stage ('zip') {
+            steps {
+                sh 'zip -r dotnetcore-docs-hello-world-1.0.0.zip . -i /home/ubuntu/dotnetcore-docs-hello-world/bin/Debug/net6.0/publishbug/net6.0/publish'
+            }
+        }
+    }
+}
